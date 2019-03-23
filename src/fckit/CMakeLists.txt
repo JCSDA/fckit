@@ -36,6 +36,8 @@ if( HAVE_ECKIT )
       module/fckit_buffer.cc
       module/fckit_buffer.F90
       module/fckit_owned_object.F90
+      module/fckit_geometry.cc
+      module/fckit_geometry.F90
       Libfckit.h
       Libfckit.cc
       Main.h
