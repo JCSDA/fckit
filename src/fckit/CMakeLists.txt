@@ -38,6 +38,8 @@ if( HAVE_ECKIT )
       module/fckit_owned_object.F90
       module/fckit_geometry.cc
       module/fckit_geometry.F90
+      module/fckit_kdtree.cc
+      module/fckit_kdtree.F90
       Libfckit.h
       Libfckit.cc
       Main.h
