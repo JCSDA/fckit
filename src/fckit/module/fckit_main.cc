@@ -13,8 +13,11 @@
 #include <cstdint>
 #include <exception>
 #include <stdexcept>
+
 #include "eckit/config/LibEcKit.h"
-#include "eckit/config/LibEcKit.h"
+#include "eckit/exception/Exceptions.h"
+#include "eckit/log/CodeLocation.h"
+
 #include "fckit/Main.h"
 #include "fckit/Log.h"
 

@@ -8,16 +8,18 @@
  * does it submit to any jurisdiction.
  */
 
+#include <cstdarg>
+#include <cstdint>
+#include <cstring>
 #include <iostream>
 #include <stdexcept>
 #include <sstream>
-#include <cstdarg>
-#include <cstdint>
-#include "eckit/exception/Exceptions.h"
-#include "eckit/filesystem/PathName.h"
+
 #include "eckit/config/Configuration.h"
 #include "eckit/config/LocalConfiguration.h"
 #include "eckit/config/YAMLConfiguration.h"
+#include "eckit/exception/Exceptions.h"
+#include "eckit/filesystem/PathName.h"
 #include "eckit/parser/JSON.h"
 #include "eckit/parser/JSONParser.h"
 

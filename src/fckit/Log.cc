@@ -9,14 +9,17 @@
  */
 
 #include <algorithm>
-#include "fckit/Libfckit.h"
-#include "fckit/Log.h"
+
+#include "eckit/exception/Exceptions.h"
 #include "eckit/log/TimeStampTarget.h"
 #include "eckit/log/PrefixTarget.h"
 #include "eckit/log/CallbackTarget.h"
 #include "eckit/log/FileTarget.h"
 #include "eckit/log/OStreamTarget.h"
 #include "eckit/runtime/Main.h"
+
+#include "fckit/Libfckit.h"
+#include "fckit/Log.h"
 
 using fckit::Log;
 using eckit::system::Library;

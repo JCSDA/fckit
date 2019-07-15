@@ -8,8 +8,12 @@
  * does it submit to any jurisdiction.
  */
 
-#include <sstream>
 #include <cstdint>
+#include <sstream>
+
+#include "eckit/exception/Exceptions.h"
+#include "eckit/log/CodeLocation.h"
+#include "eckit/log/Log.h"
 #include "eckit/mpi/Comm.h"
 
 using eckit::mpi::Comm;

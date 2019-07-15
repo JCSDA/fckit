@@ -8,8 +8,8 @@
  * does it submit to any jurisdiction.
  */
 
-#include <string>
 #include <cstdint>
+#include <cstring>
 
 #include "eckit/io/SharedBuffer.h"
 

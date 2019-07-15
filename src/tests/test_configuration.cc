@@ -8,6 +8,8 @@
  * does it submit to any jurisdiction.
  */
 
+#include <iostream>
+
 #include "eckit/config/LocalConfiguration.h"
 
 using namespace eckit;
