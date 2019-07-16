@@ -56,6 +56,7 @@ TEST( test_configuration )
   type(fckit_Configuration) :: nested
   type(fckit_Configuration) :: list(2)
   logical :: found
+  logical :: logval
   integer :: intval
   integer :: j
 
@@ -80,6 +81,7 @@ TEST( test_configuration )
   !     n2: 12
   !   p1: 1
   !   p2: 2
+  !   logical : True
   ! }
 
   config = fckit_Configuration()
@@ -87,6 +89,8 @@ TEST( test_configuration )
 
   call config%set("p1",1)
   call config%set("p2",2)
+  call config%set("logical_true",.True.)
+  call config%set("logical_false",.False.)
 
   nested = fckit_Configuration()
   call nested%set("n1",11)
@@ -121,6 +125,14 @@ enddo
   found = config%get("p1",intval)
   FCTEST_CHECK( found )
   FCTEST_CHECK_EQUAL( intval , 1 )
+
+  found = config%get("logical_true",logval)
+  FCTEST_CHECK( found )
+  FCTEST_CHECK( logval )
+
+  found = config%get("logical_false",logval)
+  FCTEST_CHECK( found )
+  FCTEST_CHECK( .not. logval )
 
   found = config%get("nested",anested)
   FCTEST_CHECK( found )
@@ -249,8 +261,10 @@ TEST(test_configuration_json_file)
   type(fckit_Configuration), allocatable :: records(:)
   type(fckit_Configuration) :: location
   character (len=:), allocatable :: name, company, street, city
+  character (len=:), allocatable :: variables(:)
   integer :: age
   integer :: jrec
+  logical :: logval
   character(len=1024) :: msg
 
   write(0,*) "~~~~~~~~~~~~~~ SCOPE BEGIN ~~~~~~~~~~~~~~~"
@@ -259,7 +273,8 @@ TEST(test_configuration_json_file)
   ! Write a json file
   OPEN (UNIT=9 , FILE="fctest_configuration.json", STATUS='REPLACE')
   write(9,'(A)') '{"location":{"city":"Reading","company":"ECMWF","street":"Shinfield Road"},'//&
-  &'"records":[{"age":42,"name":"Anne"},{"age":36,"name":"Bob"}]}'
+  &'"records":[{"age":42,"name":"Anne"},{"age":36,"name":"Bob"}],"trueval": true ,"falseval":false,'//&
+  &'"variables":["u","o3","co2"]}'
   CLOSE(9)
 
   config = fckit_YAMLConfiguration( fckit_PathName("fctest_configuration.json") )
@@ -297,6 +312,20 @@ TEST(test_configuration_json_file)
     call location%final()
 #endif
   endif
+
+  if( config%get("trueval",logval) ) then
+    FCTEST_CHECK( logval )
+  endif
+
+  if( config%get("falseval",logval) ) then
+    FCTEST_CHECK( .not. logval )
+  endif
+
+  if( config%get("variables",variables) ) then
+    write(0,*) "variables: ", variables
+    if( allocated(variables) ) deallocate(variables)
+  endif
+
   write(0,*) "config%owners() = ", config%owners()
 #if ! FCKIT_HAVE_FINAL
   call config%final()
