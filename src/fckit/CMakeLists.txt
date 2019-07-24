@@ -109,6 +109,6 @@ target_include_directories( fckit PUBLIC
     $<INSTALL_INTERFACE:module/fckit>
 )
 
-target_link_libraries( fckit PRIVATE ${ECKIT_LIBRARIES} )
+target_link_libraries( fckit PUBLIC ${ECKIT_LIBRARIES} )
 
 fckit_target_preprocess_fypp( fckit )
