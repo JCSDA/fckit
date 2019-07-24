@@ -253,6 +253,7 @@ END_TEST
 TEST(test_configuration_json_file)
 #if 1
 #if NO_COMPILER_BUGS
+  use, intrinsic :: iso_c_binding, only : c_char, c_size_t
   use fckit_configuration_module
   use fckit_pathname_module
   use fckit_log_module
@@ -261,7 +262,8 @@ TEST(test_configuration_json_file)
   type(fckit_Configuration), allocatable :: records(:)
   type(fckit_Configuration) :: location
   character (len=:), allocatable :: name, company, street, city
-  character (len=:), allocatable :: variables(:)
+  character (kind=c_char,len=10), allocatable :: variables(:)
+  integer(c_size_t) :: length=10
   integer :: age
   integer :: jrec
   logical :: logval
@@ -321,10 +323,12 @@ TEST(test_configuration_json_file)
     FCTEST_CHECK( .not. logval )
   endif
 
-  if( config%get("variables",variables) ) then
+  allocate(variables(3))
+  if( config%get("variables",length,variables) ) then
     write(0,*) "variables: ", variables
     if( allocated(variables) ) deallocate(variables)
   endif
+  deallocate(variables)
 
   write(0,*) "config%owners() = ", config%owners()
 #if ! FCKIT_HAVE_FINAL
