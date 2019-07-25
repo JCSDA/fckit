@@ -326,9 +326,8 @@ TEST(test_configuration_json_file)
   allocate(variables(3))
   if( config%get("variables",length,variables) ) then
     write(0,*) "variables: ", variables
-    if( allocated(variables) ) deallocate(variables)
   endif
-  deallocate(variables)
+  if( allocated(variables) ) deallocate(variables)
 
   write(0,*) "config%owners() = ", config%owners()
 #if ! FCKIT_HAVE_FINAL
