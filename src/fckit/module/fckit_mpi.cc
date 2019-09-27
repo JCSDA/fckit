@@ -161,6 +161,9 @@ int32 fckit__mpi__maxloc() {
 int32 fckit__mpi__minloc() {
     return int( eckit::mpi::minloc() );
 }
+int32 fckit__mpi__info_null() {
+    return int( eckit::mpi::info_null() );
+}
 
 void fckit__mpi__allreduce_int32( const Comm* comm, const int32* in, int32* out, size_t count, int32 operation ) {
     if ( comm )
