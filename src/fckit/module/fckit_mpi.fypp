@@ -251,7 +251,7 @@ contains
     !! Minloc operator that can be passed to collective method
   procedure, public, nopass :: maxloc         => fckit_mpi_maxloc
     !! Maxloc operator that can be passed to collective method
-  procedure, public, nopass :: info_null  => fckit_mpi_info_null
+  procedure, public, nopass :: info_null      => fckit_mpi_info_null
     !! MPI info null value that can be passed for I/O methods
 endtype
 
