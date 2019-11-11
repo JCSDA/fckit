@@ -259,6 +259,7 @@ type(fckit_mpi_comm) :: fckit_mpi
 
 interface fckit_mpi_comm
   module procedure comm_constructor
+  module procedure comm_constructor_ptr
   module procedure comm_wrap
 end interface
 
@@ -294,11 +295,11 @@ interface
     character(kind=c_char), dimension(*) :: name
   end function
 
-  ! const fckit::mpi::Comm* fckit__mpi__comm_ptr(const eckit::mpi::Comm* comm)
-  function fckit__mpi__comm_ptr(comm) bind(c)
+  ! const fckit::mpi::Comm* fckit__mpi__comm_ptr(c_comm)
+  function fckit__mpi__comm_ptr(c_comm) bind(c)
     use, intrinsic :: iso_c_binding, only: c_ptr
     type(c_ptr) :: fckit__mpi__comm_ptr
-    type(c_ptr), value :: comm
+    type(c_ptr) :: c_comm
   end function
 
   ! const fckit::mpi::Comm* fckit__mpi__comm_wrap(int comm)
@@ -622,6 +623,13 @@ function comm_constructor(name) result(this)
   else
     call this%reset_c_ptr( fckit__mpi__comm_default() )
   endif
+end function
+
+function comm_constructor_ptr(comm) result(this)
+  use, intrinsic :: iso_c_binding, only: c_ptr
+  type(fckit_mpi_comm) :: this
+  type(c_ptr), intent(in) :: comm
+  call this%reset_c_ptr( fckit__mpi__comm_ptr(comm) )
 end function
 
 function comm_wrap(comm) result(this)
