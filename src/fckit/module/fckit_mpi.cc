@@ -48,10 +48,6 @@ const Comm* fckit__mpi__comm( const char* name ) {
     return &eckit::mpi::comm( name );
 }
 
-const Comm* fckit__mpi__comm_ptr( const eckit::mpi::Comm* ptr_comm ) {
-    return ptr_comm;
-}
-
 const Comm* fckit__mpi__comm_wrap( int32 comm ) {
     std::ostringstream s;
     s << "fort." << comm;
