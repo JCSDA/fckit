@@ -621,7 +621,7 @@ end function
 function comm_constructor_ptr(comm) result(this)
   use, intrinsic :: iso_c_binding, only: c_ptr
   type(fckit_mpi_comm) :: this
-  type(c_ptr), value, intent(in) :: comm
+  type(c_ptr), intent(in) :: comm
   call this%reset_c_ptr( comm )
 end function
 
