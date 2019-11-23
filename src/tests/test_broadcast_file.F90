@@ -17,7 +17,7 @@
 
 #if COMPILER_BUGS
 #define NO_COMPILER_BUGS 0
-#warning Some tests disabled due to gfortran 7 compiler bug. Only one TEST at a time may be compiled.
+! #warning Some tests disabled due to gfortran 7 compiler bug. Only one TEST at a time may be compiled.
 #else
 #define NO_COMPILER_BUGS 1
 #endif

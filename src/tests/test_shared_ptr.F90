@@ -590,7 +590,7 @@ TEST( test_shared_object_allocatable_list_auto_manual )
   write(0,'(A)')
 #else
 #ifndef __ibmxl__
-#warning test_shared_object_allocatable_list_auto_manual disabled
+! #warning test_shared_object_allocatable_list_auto_manual disabled
 #endif
 #endif
 END_TEST
@@ -611,7 +611,7 @@ TEST( test_shared_object_allocatable_list_manual_auto )
   write(0,'(A)')
 #else
 #ifndef __ibmxl__
-#warning test_shared_object_allocatable_list_manual_auto disabled
+! #warning test_shared_object_allocatable_list_manual_auto disabled
 #endif
 #endif
 END_TEST
@@ -632,7 +632,7 @@ TEST( test_shared_object_allocatable_list_manual_manual )
   write(0,'(A)')
 #else
 #ifndef __ibmxl__
-#warning test_shared_object_allocatable_list_manual_manual disabled
+! #warning test_shared_object_allocatable_list_manual_manual disabled
 #endif
 #endif
 END_TEST
