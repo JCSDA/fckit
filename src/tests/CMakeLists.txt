@@ -34,7 +34,6 @@ add_fctest( TARGET  fckit_test_shared_ptr
             SOURCES
               test_shared_ptr.F90
               test_shared_ptr.cc
-            FFLAGS $<$<NOT:$<CONFIG:Debug>>:-Wno-cpp>
             LIBS    fckit)
 
 add_fctest( TARGET  fckit_test_mpi
@@ -58,7 +57,6 @@ add_fctest( TARGET  fckit_test_configuration
             SOURCES test_configuration.F90
             DEFINITIONS ${FCKIT_DEFINITIONS}
             CONDITION HAVE_ECKIT
-            FFLAGS $<$<NOT:$<CONFIG:Debug>>:-Wno-cpp>
             LIBS    fckit)
 
 add_fctest( TARGET  fckit_test_broadcast_file
@@ -67,7 +65,6 @@ add_fctest( TARGET  fckit_test_broadcast_file
             MPI 4
             DEFINITIONS ${FCKIT_DEFINITIONS}
             CONDITION HAVE_ECKIT AND ECKIT_HAVE_MPI
-            FFLAGS $<$<NOT:$<CONFIG:Debug>>:-Wno-cpp>
             LIBS    fckit)
 
 endif()
