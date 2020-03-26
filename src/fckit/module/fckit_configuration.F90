@@ -94,6 +94,7 @@ contains
   procedure, private :: set_real32
   procedure, private :: set_real64
   procedure, private :: set_string
+  procedure, private :: set_array_string
   procedure, private :: set_array_int32
   procedure, private :: set_array_int64
   procedure, private :: set_array_real32
@@ -135,6 +136,7 @@ contains
     set_real32, &
     set_real64, &
     set_string, &
+    set_array_string, &
     set_array_int32, &
     set_array_int64, &
     set_array_real32, &
@@ -502,6 +504,22 @@ subroutine set_string(this, name, value)
   character(kind=c_char,len=*), intent(in) :: name
   character(kind=c_char,len=*), intent(in) :: value
   call c_fckit_configuration_set_string(this%CPTR_PGIBUG_B, c_str(name) , c_str(value) )
+end subroutine
+
+subroutine set_array_string(this, name, length, value)
+  use, intrinsic :: iso_c_binding, only : c_f_pointer
+  use fckit_c_interop_module, only : c_str, c_ptr_to_string, c_ptr_free
+  class(fckit_Configuration), intent(in) :: this
+  character(kind=c_char,len=*), intent(in) :: name
+  integer(c_size_t), intent(in) :: length
+  character(kind=c_char,len=length), intent(in) :: value(:)
+  character(kind=c_char,len=length*size(value)) :: flatvalue
+  integer(c_int32_t) :: ii
+  do ii = 1, size(value)
+    flatvalue((ii-1)*length+1:ii*length) = value(ii)
+  enddo
+  call c_fckit_configuration_set_array_string(this%CPTR_PGIBUG_B, c_str(name), &
+    c_str(flatvalue), length, size(value,kind=c_size_t) )
 end subroutine
 
 subroutine set_array_int32(this, name, value)
