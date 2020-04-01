@@ -178,7 +178,7 @@ end subroutine
 
 !-------------------------------------------------------------------------------
 ! void c_fckit_configuration_set_array_string (Configuration* This, const char* n
-!   ame, const char* value[], size_t size)
+!   ame, const char* value, size_t size)
 !-------------------------------------------------------------------------------
 subroutine c_fckit_configuration_set_array_string( This, name, value, length, size ) bin&
   &d(C,name="c_fckit_configuration_set_array_string")

@@ -506,20 +506,25 @@ subroutine set_string(this, name, value)
   call c_fckit_configuration_set_string(this%CPTR_PGIBUG_B, c_str(name) , c_str(value) )
 end subroutine
 
-subroutine set_array_string(this, name, length, value)
+subroutine set_array_string(this, name, value)
   use, intrinsic :: iso_c_binding, only : c_f_pointer
   use fckit_c_interop_module, only : c_str, c_ptr_to_string, c_ptr_free
   class(fckit_Configuration), intent(in) :: this
   character(kind=c_char,len=*), intent(in) :: name
-  integer(c_size_t), intent(in) :: length
-  character(kind=c_char,len=length), intent(in) :: value(:)
-  character(kind=c_char,len=length*size(value)) :: flatvalue
+  character(kind=c_char,len=*), intent(in) :: value(:)
+  character(kind=c_char,len=:), allocatable :: flatvalue
+  integer(c_size_t) :: length
   integer(c_int32_t) :: ii
-  do ii = 1, size(value)
-    flatvalue((ii-1)*length+1:ii*length) = value(ii)
-  enddo
-  call c_fckit_configuration_set_array_string(this%CPTR_PGIBUG_B, c_str(name), &
-    c_str(flatvalue), length, size(value,kind=c_size_t) )
+  length = 0
+  if( size(value) > 0 ) then
+    length = len(value(1))
+    allocate( character(len=length*size(value) ) :: flatvalue )
+    do ii = 1, size(value)
+      flatvalue((ii-1)*length+1:ii*length) = value(ii)
+    enddo
+    call c_fckit_configuration_set_array_string(this%CPTR_PGIBUG_B, c_str(name), &
+      &  c_str(flatvalue), length, size(value,kind=c_size_t) )
+  endif
 end subroutine
 
 subroutine set_array_int32(this, name, value)
