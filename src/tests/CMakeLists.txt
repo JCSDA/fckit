@@ -82,7 +82,7 @@ ecbuild_add_test( TARGET  fckit_test_configuration_cpp
             test_configuration_fortcode.F90
             INCLUDES ${ECKIT_INCLUDE_DIRS}
             CONDITION HAVE_ECKIT
-            LIBS    fckit  eckit eckit_mpi )
+            LIBS    fckit  eckit eckit_mpi eckit_geometry )
 
 if( TEST fckit_test_configuration_cpp )
   set_property( TEST fckit_test_configuration_cpp APPEND PROPERTY LABELS "fortran" )
@@ -94,7 +94,7 @@ ecbuild_add_test( TARGET fckit_test_cpp
   INCLUDES ${ECKIT_INCLUDE_DIRS}
   ENVIRONMENT "DEBUG=1"
   CONDITION HAVE_ECKIT
-  LIBS fckit eckit eckit_mpi )
+  LIBS fckit eckit eckit_mpi eckit_geometry )
 
 ### Fix linking for C++ test executables linked with Fortran linker
 if( CMAKE_Fortran_COMPILER_ID MATCHES "PGI" )

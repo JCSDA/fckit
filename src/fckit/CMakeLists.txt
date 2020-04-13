@@ -30,6 +30,10 @@ if( HAVE_ECKIT )
       module/fckit_buffer.F90
       module/fckit_owned.cc
       module/fckit_owned_object.F90
+      module/fckit_geometry.cc
+      module/fckit_geometry.F90
+      module/fckit_kdtree.cc
+      module/fckit_kdtree.F90
       Libfckit.h
       Libfckit.cc
       Main.h
@@ -37,7 +41,7 @@ if( HAVE_ECKIT )
       Log.h
       Log.cc
   )
-  set( eckit_required_libs eckit eckit_mpi )
+  set( eckit_required_libs eckit eckit_mpi eckit_geometry )
 endif()
 
 if( BUILD_SHARED_LIBS )

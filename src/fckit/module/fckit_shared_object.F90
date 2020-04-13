@@ -40,7 +40,7 @@ contains
 
   procedure, public :: reset_c_ptr
 
-  !procedure, public  :: c_ptr => fckit_shared_object_c_ptr
+  procedure, public  :: c_ptr => fckit_shared_object_c_ptr
   procedure, private :: fckit_shared_object_c_ptr
 
   procedure, public :: is_null
