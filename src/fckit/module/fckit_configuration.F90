@@ -986,6 +986,8 @@ function get_array_string_deprecated(this, name, length, value) result(found)
   character(kind=c_char,len=length), allocatable, intent(inout) :: value(:)
   character(kind=c_char,len=:), allocatable :: tmp(:)
   found = get_array_string(this,name,tmp)
+  if (allocated(value)) deallocate(value)
+  allocate(value(size(tmp)))
   value = tmp
 end function
 
