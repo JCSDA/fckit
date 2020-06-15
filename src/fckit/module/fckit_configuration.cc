@@ -162,10 +162,10 @@ void c_fckit_configuration_set_string( Configuration* This, const char* name, co
 void c_fckit_configuration_set_array_string( Configuration* This, const char* name, const char* value, size_t length, size_t size ) {
     ASSERT( This != nullptr );
     vector<string> v;
-    string value_str(value);
     for (size_t jj = 0; jj < size; ++jj ) {
-      string str = value_str.substr(jj*length, length);
-      v.push_back( str );
+      char str[length + 1];
+      ASSERT( snprintf( str, sizeof( str ), "%s", value + jj * length ) >= 0 );
+      v.push_back( string( str ) );
     }
     if ( LocalConfiguration* local = dynamic_cast<LocalConfiguration*>( This ) )
         local->set( string( name ), v );

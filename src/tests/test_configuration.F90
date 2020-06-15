@@ -40,7 +40,6 @@ TEST( test_configuration )
   logical :: logval
   integer :: intval
   integer :: j
-  character(len=:),allocatable :: strarrval(:)
 
   type(fckit_Configuration) :: anested
   type(fckit_Configuration), allocatable :: alist(:)
@@ -73,7 +72,7 @@ TEST( test_configuration )
   call config%set("p2",2)
   call config%set("logical_true",.True.)
   call config%set("logical_false",.False.)
-  call config%set("string_array",(/"foo","bar"/))
+
 
   nested = fckit_Configuration()
   call nested%set("n1",11)
@@ -118,11 +117,6 @@ enddo
   found = config%get("logical_false",logval)
   FCTEST_CHECK( found )
   FCTEST_CHECK( .not. logval )
-
-  found = config%get("string_array",strarrval)
-  FCTEST_CHECK( found )
-  FCTEST_CHECK( strarrval(1) == "foo" )
-  FCTEST_CHECK( strarrval(2) == "bar" )
 
   found = config%get("nested",anested)
   FCTEST_CHECK( found )
