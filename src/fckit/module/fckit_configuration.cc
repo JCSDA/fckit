@@ -163,8 +163,8 @@ void c_fckit_configuration_set_array_string( Configuration* This, const char* na
     ASSERT( This != nullptr );
     vector<string> v;
     for (size_t jj = 0; jj < size; ++jj ) {
-      char str[length];
-      strncpy( str, value + jj*length, length );
+      char str[length + 1];
+      ASSERT( snprintf( str, sizeof( str ), "%s", value + jj * length ) >= 0 );
       v.push_back( string( str ) );
     }
     if ( LocalConfiguration* local = dynamic_cast<LocalConfiguration*>( This ) )
@@ -341,7 +341,7 @@ int32 c_fckit_configuration_get_array_string( const Configuration* This, const c
         offsets[j] = size;
         size += s[j].size();
     }
-    value = new char[size];
+    value = new char[size+1];
     for ( size_t j = 0; j < numelem; ++j ) {
         strcpy( &value[offsets[j]], s[j].c_str() );
     }

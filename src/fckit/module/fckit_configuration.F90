@@ -936,7 +936,7 @@ function get_array_string(this,name,value) result(found)
    & value_cptr, value_size, offsets_cptr, value_numelem)
   if( found_int == 1 ) then
     ! Get flat character array
-    allocate(character(len=value_size) :: flatvalue )
+    allocate(character(len=value_size+1) :: flatvalue )
     flatvalue = c_ptr_to_string(value_cptr)
     call c_ptr_free(value_cptr)
     ! Get offsets
@@ -986,6 +986,8 @@ function get_array_string_deprecated(this, name, length, value) result(found)
   character(kind=c_char,len=length), allocatable, intent(inout) :: value(:)
   character(kind=c_char,len=:), allocatable :: tmp(:)
   found = get_array_string(this,name,tmp)
+  if (allocated(value)) deallocate(value)
+  allocate(value(size(tmp)))
   value = tmp
 end function
 
