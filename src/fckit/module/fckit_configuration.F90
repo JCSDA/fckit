@@ -936,7 +936,7 @@ function get_array_string(this,name,value) result(found)
    & value_cptr, value_size, offsets_cptr, value_numelem)
   if( found_int == 1 ) then
     ! Get flat character array
-    allocate(character(len=value_size) :: flatvalue )
+    allocate(character(len=value_size+1) :: flatvalue )
     flatvalue = c_ptr_to_string(value_cptr)
     call c_ptr_free(value_cptr)
     ! Get offsets
