@@ -156,7 +156,6 @@ contains
   procedure, private :: get_array_real32
   procedure, private :: get_array_real64
   procedure, private :: get_array_string
-  procedure, private :: get_array_string_deprecated
 
   !----------------------------------------------------------------------------
   !> Function that gets a name-value configuration
@@ -215,8 +214,7 @@ contains
     get_array_int64, &
     get_array_real32, &
     get_array_real64, &
-    get_array_string, &
-    get_array_string_deprecated
+    get_array_string
 
     procedure, private :: get_config_or_die
     procedure, private :: get_config_list_or_die
@@ -232,7 +230,6 @@ contains
     procedure, private :: get_array_real32_or_die
     procedure, private :: get_array_real64_or_die
     procedure, private :: get_array_string_or_die
-    procedure, private :: get_array_string_or_die_deprecated
 
     !----------------------------------------------------------------------------
     !> Subroutine that gets a name-value configuration, and throws exception
@@ -277,8 +274,7 @@ contains
       get_array_int64_or_die, &
       get_array_real32_or_die, &
       get_array_real64_or_die, &
-      get_array_string_or_die, &
-      get_array_string_or_die_deprecated
+      get_array_string_or_die
 
   procedure :: json
     !! Return a json string corresponding to this configuration
@@ -345,6 +341,7 @@ subroutine deallocate_fckit_configuration( array )
   endif
 end subroutine
 
+#if FCKIT_FINAL_NOT_INHERITING
 FCKIT_FINAL subroutine fckit_configuration__final_auto(this)
   type(fckit_configuration), intent(inout) :: this
 #if FCKIT_FINAL_DEBUGGING
@@ -355,6 +352,7 @@ FCKIT_FINAL subroutine fckit_configuration__final_auto(this)
 #endif
   FCKIT_SUPPRESS_UNUSED( this )
 end subroutine
+#endif
 
 function ctor() result(this)
   type(fckit_Configuration) :: this
@@ -597,7 +595,7 @@ function get_config_list(this, name, value) result(found)
   type(c_ptr), pointer :: value_cptrs(:)
   integer(c_size_t) :: value_list_size
   integer(c_int32_t) :: found_int
-  integer(c_int32_t) :: j
+  integer(c_size_t) :: j
   call deallocate_fckit_configuration(value)
   value_list_cptr = c_null_ptr
   found_int = c_fckit_configuration_get_config_list(this%CPTR_PGIBUG_B, c_str(name), &
@@ -930,7 +928,7 @@ function get_array_string(this,name,value) result(found)
   integer(c_int32_t) :: found_int
   integer(c_size_t) :: maxelemlen
   integer(c_size_t) :: elemlen
-  integer :: j
+  integer(c_size_t) :: j
   character(len=:), allocatable :: flatvalue
   found_int =   c_fckit_configuration_get_array_string(this%CPTR_PGIBUG_B, c_str(name), &
    & value_cptr, value_size, offsets_cptr, value_numelem)
@@ -974,29 +972,6 @@ subroutine get_array_string_or_die(this,name,value)
   character(len=*), intent(in) :: name
   character(len=:), allocatable, intent(inout) :: value(:)
   if( .not. this%get(name,value) ) call throw_configuration_not_found(name)
-end subroutine
-
-function get_array_string_deprecated(this, name, length, value) result(found)
-  use, intrinsic :: iso_c_binding, only : c_f_pointer
-  use fckit_c_interop_module, only : c_str, c_ptr_to_string, c_ptr_free
-  logical :: found
-  class(fckit_Configuration), intent(in) :: this
-  character(kind=c_char,len=*), intent(in) :: name
-  integer(c_size_t), intent(in) :: length
-  character(kind=c_char,len=length), allocatable, intent(inout) :: value(:)
-  character(kind=c_char,len=:), allocatable :: tmp(:)
-  found = get_array_string(this,name,tmp)
-  if (allocated(value)) deallocate(value)
-  allocate(value(size(tmp)))
-  value = tmp
-end function
-
-subroutine get_array_string_or_die_deprecated(this,name,length,value)
-  class(fckit_Configuration), intent(in) :: this
-  character(len=*), intent(in) :: name
-  integer(c_size_t), intent(in) :: length
-  character(len=length), allocatable, intent(inout) :: value(:)
-  if( .not. this%get(name,length,value) ) call throw_configuration_not_found(name)
 end subroutine
 
 function json(this) result(jsonstr)
