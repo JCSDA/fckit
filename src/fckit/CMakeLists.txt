@@ -104,4 +104,6 @@ ecbuild_add_library(
 
 )
 
+target_compile_features(fckit PUBLIC cxx_std_11)
+
 fckit_target_preprocess_fypp( fckit )

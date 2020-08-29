@@ -22,8 +22,6 @@ find_package( ecbuild 3.0.0 REQUIRED )
 project( fckit LANGUAGES C CXX Fortran )
 
 set(CMAKE_DIRECTORY_LABELS "fckit")
-set(CMAKE_CXX_STANDARD 11)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ################################################################################################
 # options & dependencies
