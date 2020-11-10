@@ -354,7 +354,11 @@ int32 c_fckit_configuration_has( const Configuration* This, const char* name ) {
 }
 
 int32 c_fckit_configuration_get_size( const Configuration* This, const char* name ) {
-    return This->getStringVector( name ).size();
+    if ( This->typeName( name ) == "List" ) {
+       return This->getStringVector( name ).size();  // list
+    } else {
+       return 0;  // single value
+    }
 }
 
 void c_fckit_configuration_json( const Configuration* This, char*& json, size_t& size ) {
